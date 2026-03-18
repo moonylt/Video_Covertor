@@ -1,0 +1,245 @@
+#============================================================================
+# UCF Constraints File: video_converter.ucf
+# Project: VIDEO_CONVERTER FPGA Verification (Minimal Version)
+# Device: Xilinx Spartan-6 XC6SLX45-3FGG484I
+# Date: 2026-03-16
+#
+# 注意：
+# - DDR3 接口固定为空闲电平
+# - SPI Flash 仅用于配置，无需用户逻辑
+# - UART 串口未使用
+# - ADV7125/ADV7393 视频输出暂时不使用
+#============================================================================
+
+#============================================================================
+# 时钟输入
+#============================================================================
+# 50MHz 系统时钟 (X2)
+NET "clk_50mhz"       LOC = AA12 | IOSTANDARD = LVCMOS33 | PERIOD = 20.000 ns;
+# 27MHz 视频时钟 (X1)
+NET "clk_27mhz"       LOC = AB13 | IOSTANDARD = LVCMOS33 | PERIOD = 37.037 ns;
+
+#============================================================================
+# 全局复位
+#============================================================================
+NET "rst_n"           LOC = T6   | IOSTANDARD = LVCMOS33 | PULLUP;
+
+#============================================================================
+# DDR3L 内存接口 - 固定电平输出 (不使用 DDR3)
+#============================================================================
+NET "ddr3_dq[*]"      IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_dqs_p[*]"   IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_dqs_n[*]"   IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_dm[*]"      IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_addr[*]"    IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_ba[*]"      IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_ras_n"      IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_cas_n"      IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_we_n"       IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_reset_n"    IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_ck_p"       IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_ck_n"       IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_cke"        IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_cs_n[*]"    IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_odt[*]"     IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+
+#============================================================================
+# TFP401A (U2) - HDMI 接收器 → FPGA 并行数据输入 (LVCMOS25)
+#============================================================================
+# 蓝色通道 (D0-D7)
+NET "tfp401_dvi_d[0]"   LOC = C5   | IOSTANDARD = LVCMOS25;
+NET "tfp401_dvi_d[1]"   LOC = A5   | IOSTANDARD = LVCMOS25;
+NET "tfp401_dvi_d[2]"   LOC = D6   | IOSTANDARD = LVCMOS25;
+NET "tfp401_dvi_d[3]"   LOC = C6   | IOSTANDARD = LVCMOS25;
+NET "tfp401_dvi_d[4]"   LOC = A6   | IOSTANDARD = LVCMOS25;
+NET "tfp401_dvi_d[5]"   LOC = B6   | IOSTANDARD = LVCMOS25;
+NET "tfp401_dvi_d[6]"   LOC = C7   | IOSTANDARD = LVCMOS25;
+NET "tfp401_dvi_d[7]"   LOC = A7   | IOSTANDARD = LVCMOS25;
+
+# 绿色通道 (D8-D15)
+NET "tfp401_dvi_d[8]"   LOC = D7   | IOSTANDARD = LVCMOS25;
+NET "tfp401_dvi_d[9]"   LOC = D8   | IOSTANDARD = LVCMOS25;
+NET "tfp401_dvi_d[10]"  LOC = A8   | IOSTANDARD = LVCMOS25;
+NET "tfp401_dvi_d[11]"  LOC = B8   | IOSTANDARD = LVCMOS25;
+NET "tfp401_dvi_d[12]"  LOC = C8   | IOSTANDARD = LVCMOS25;
+NET "tfp401_dvi_d[13]"  LOC = A9   | IOSTANDARD = LVCMOS25;
+NET "tfp401_dvi_d[14]"  LOC = C9   | IOSTANDARD = LVCMOS25;
+NET "tfp401_dvi_d[15]"  LOC = D9   | IOSTANDARD = LVCMOS25;
+
+# 红色通道 (D16-D23)
+NET "tfp401_dvi_d[16]"  LOC = C14  | IOSTANDARD = LVCMOS25;
+NET "tfp401_dvi_d[17]"  LOC = B14  | IOSTANDARD = LVCMOS25;
+NET "tfp401_dvi_d[18]"  LOC = A14  | IOSTANDARD = LVCMOS25;
+NET "tfp401_dvi_d[19]"  LOC = D15  | IOSTANDARD = LVCMOS25;
+NET "tfp401_dvi_d[20]"  LOC = C15  | IOSTANDARD = LVCMOS25;
+NET "tfp401_dvi_d[21]"  LOC = A15  | IOSTANDARD = LVCMOS25;
+NET "tfp401_dvi_d[22]"  LOC = E16  | IOSTANDARD = LVCMOS25;
+NET "tfp401_dvi_d[23]"  LOC = C16  | IOSTANDARD = LVCMOS25;
+
+# 同步和控制信号
+NET "tfp401_de"         LOC = C17  | IOSTANDARD = LVCMOS25;
+NET "tfp401_hs"         LOC = A18  | IOSTANDARD = LVCMOS25;
+NET "tfp401_vs"         LOC = B18  | IOSTANDARD = LVCMOS25;
+NET "tfp401_pclk"       LOC = B10  | IOSTANDARD = LVCMOS25;
+
+#============================================================================
+# TFP410 (U3) - FPGA 并行数据输出 → HDMI 发射器 (LVCMOS25)
+#============================================================================
+# 蓝色通道 (D0-D7)
+NET "tfp410_dvi_d[0]"   LOC = W10  | IOSTANDARD = LVCMOS25;
+NET "tfp410_dvi_d[1]"   LOC = T11  | IOSTANDARD = LVCMOS25;
+NET "tfp410_dvi_d[2]"   LOC = R11  | IOSTANDARD = LVCMOS25;
+NET "tfp410_dvi_d[3]"   LOC = T12  | IOSTANDARD = LVCMOS25;
+NET "tfp410_dvi_d[4]"   LOC = U12  | IOSTANDARD = LVCMOS25;
+NET "tfp410_dvi_d[5]"   LOC = Y12  | IOSTANDARD = LVCMOS25;
+NET "tfp410_dvi_d[6]"   LOC = V13  | IOSTANDARD = LVCMOS25;
+NET "tfp410_dvi_d[7]"   LOC = T14  | IOSTANDARD = LVCMOS25;
+
+# 绿色通道 (D8-D15)
+NET "tfp410_dvi_d[8]"   LOC = W14  | IOSTANDARD = LVCMOS25;
+NET "tfp410_dvi_d[9]"   LOC = AB14 | IOSTANDARD = LVCMOS25;
+NET "tfp410_dvi_d[10]"  LOC = Y14  | IOSTANDARD = LVCMOS25;
+NET "tfp410_dvi_d[11]"  LOC = W15  | IOSTANDARD = LVCMOS25;
+NET "tfp410_dvi_d[12]"  LOC = AB15 | IOSTANDARD = LVCMOS25;
+NET "tfp410_dvi_d[13]"  LOC = T16  | IOSTANDARD = LVCMOS25;
+NET "tfp410_dvi_d[14]"  LOC = Y16  | IOSTANDARD = LVCMOS25;
+NET "tfp410_dvi_d[15]"  LOC = AB16 | IOSTANDARD = LVCMOS25;
+
+# 红色通道 (D16-D23)
+NET "tfp410_dvi_d[16]"  LOC = AA16 | IOSTANDARD = LVCMOS25;
+NET "tfp410_dvi_d[17]"  LOC = Y17  | IOSTANDARD = LVCMOS25;
+NET "tfp410_dvi_d[18]"  LOC = AB17 | IOSTANDARD = LVCMOS25;
+NET "tfp410_dvi_d[19]"  LOC = V18  | IOSTANDARD = LVCMOS25;
+NET "tfp410_dvi_d[20]"  LOC = W18  | IOSTANDARD = LVCMOS25;
+NET "tfp410_dvi_d[21]"  LOC = AB18 | IOSTANDARD = LVCMOS25;
+NET "tfp410_dvi_d[22]"  LOC = AA18 | IOSTANDARD = LVCMOS25;
+NET "tfp410_dvi_d[23]"  LOC = AB19 | IOSTANDARD = LVCMOS25;
+
+# 同步和控制信号
+NET "tfp410_de"         LOC = Y11  | IOSTANDARD = LVCMOS25;
+NET "tfp410_hs"         LOC = Y10  | IOSTANDARD = LVCMOS25;
+NET "tfp410_vs"         LOC = AA10 | IOSTANDARD = LVCMOS25;
+NET "tfp410_pclk"       LOC = AB12 | IOSTANDARD = LVCMOS25;
+
+#============================================================================
+# ADV7125 (U4) - RGB DAC (VGA 输出) - [暂时不使用，已注释]
+#============================================================================
+# NET "adv7125_red[0]"   LOC = T10  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_red[1]"   LOC = R7   | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_red[2]"   LOC = W9   | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_red[3]"   LOC = W8   | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_red[4]"   LOC = Y8   | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_red[5]"   LOC = AA8  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_red[6]"   LOC = AB8  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_red[7]"   LOC = T7   | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_red[8]"   LOC = V7   | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_red[9]"   LOC = AB7  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+
+# NET "adv7125_green[0]" LOC = V7   | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_green[1]" LOC = AB7  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_green[2]" LOC = Y6   | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_green[3]" LOC = AA6  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_green[4]" LOC = AB6  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_green[5]" LOC = W6   | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_green[6]" LOC = U6   | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_green[7]" LOC = AB5  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_green[8]" LOC = Y5   | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_green[9]" LOC = V5   | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+
+# NET "adv7125_blue[0]"  LOC = AB4  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_blue[1]"  LOC = AA4  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_blue[2]"  LOC = Y4   | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_blue[3]"  LOC = AB3  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_blue[4]"  LOC = W4   | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_blue[5]"  LOC = Y3   | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_blue[6]"  LOC = AB2  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_blue[7]"  LOC = AA2  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+
+# NET "adv7125_clk"      LOC = AB11 | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_blank_n"  LOC = Y5   | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+
+# NET "adv7125_scl"      LOC = U8   | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_sda"      LOC = R9   | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_hsync"    LOC = T8   | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7125_vsync"    LOC = R8   | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+
+#============================================================================
+# ADV7393 (U111) - 视频编码器 (CVBS/S-Video 输出) - [暂时不使用，已注释]
+#============================================================================
+# NET "adv7393_data[0]"  LOC = C19  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7393_data[1]"  LOC = A20  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7393_data[2]"  LOC = A21  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7393_data[3]"  LOC = B21  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7393_data[4]"  LOC = B22  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7393_data[5]"  LOC = M18  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7393_data[6]"  LOC = M17  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7393_data[7]"  LOC = M16  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7393_data[8]"  LOC = P20  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7393_data[9]"  LOC = P19  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7393_data[10]" LOC = W22  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7393_data[11]" LOC = T20  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7393_data[12]" LOC = V20  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7393_data[13]" LOC = W20  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7393_data[14]" LOC = P18  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7393_data[15]" LOC = P17  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+
+# NET "adv7393_clk"      LOC = U19  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7393_load"     LOC = F17  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7393_std"      LOC = F16  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7393_reset"    LOC = T19  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7393_hs"       LOC = F17  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7393_vs"       LOC = F16  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+
+# NET "adv7393_scl"      LOC = R19  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+# NET "adv7393_sda"      LOC = N16  | IOSTANDARD = LVCMOS33 | SLEW = FAST;
+
+#============================================================================
+# JTAG 调试接口 (用于下载和调试) - 必须保留
+#============================================================================
+NET "fpga_tck"         LOC = G15  | IOSTANDARD = LVCMOS33;
+NET "fpga_tdi"         LOC = E18  | IOSTANDARD = LVCMOS33;
+NET "fpga_tdo"         LOC = A19  | IOSTANDARD = LVCMOS33;
+NET "fpga_tms"         LOC = C18  | IOSTANDARD = LVCMOS33;
+
+#============================================================================
+# 用户接口 (用于硬件诊断)
+#============================================================================
+# 用户按键 (低有效)
+NET "btn_n[0]"         LOC = V11  | IOSTANDARD = LVCMOS33 | PULLUP;
+NET "btn_n[1]"         LOC = U10  | IOSTANDARD = LVCMOS33 | PULLUP;
+
+# LED 指示灯 (诊断状态显示)
+NET "led[0]"           LOC = R13  | IOSTANDARD = LVCMOS33 | SLEW = FAST | DRIVE = 8;
+NET "led[1]"           LOC = W10  | IOSTANDARD = LVCMOS33 | SLEW = FAST | DRIVE = 8;
+NET "led[2]"           LOC = Y10  | IOSTANDARD = LVCMOS33 | SLEW = FAST | DRIVE = 8;
+NET "led[3]"           LOC = AA10 | IOSTANDARD = LVCMOS33 | SLEW = FAST | DRIVE = 8;
+NET "led[4]"           LOC = AB10 | IOSTANDARD = LVCMOS33 | SLEW = FAST | DRIVE = 8;
+NET "led[5]"           LOC = AC10 | IOSTANDARD = LVCMOS33 | SLEW = FAST | DRIVE = 8;
+NET "led[6]"           LOC = AD10 | IOSTANDARD = LVCMOS33 | SLEW = FAST | DRIVE = 8;
+NET "led[7]"           LOC = AE10 | IOSTANDARD = LVCMOS33 | SLEW = FAST | DRIVE = 8;
+
+#============================================================================
+# 测试点输出 (示波器测量点)
+#============================================================================
+NET "test_point[0]"    LOC = AF10 | IOSTANDARD = LVCMOS33 | SLEW = FAST | DRIVE = 8;
+NET "test_point[1]"    LOC = AG10 | IOSTANDARD = LVCMOS33 | SLEW = FAST | DRIVE = 8;
+NET "test_point[2]"    LOC = AH10 | IOSTANDARD = LVCMOS33 | SLEW = FAST | DRIVE = 8;
+NET "test_point[3]"    LOC = A11  | IOSTANDARD = LVCMOS33 | SLEW = FAST | DRIVE = 8;
+
+#============================================================================
+# 时序约束
+#============================================================================
+TIMESPEC "TS_SYS_CLK" = PERIOD "sys_clk" 10.000 ns HIGH 50%;
+TIMESPEC "TS_PIXEL_CLK" = PERIOD "pixel_clk" 13.468 ns HIGH 50%;
+
+#============================================================================
+# 时钟专用路由约束 (允许 PLL 时钟驱动外部引脚)
+#============================================================================
+NET "sys_clk" CLOCK_DEDICATED_ROUTE = FALSE;
+NET "pixel_clk" CLOCK_DEDICATED_ROUTE = FALSE;
+
+#============================================================================
+# 配置选项
+#============================================================================
+CONFIG VCCAUX = 3.3;
+CONFIG CONFIG_RATE = 50;

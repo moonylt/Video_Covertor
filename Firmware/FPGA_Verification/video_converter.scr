@@ -1,0 +1,66 @@
+#============================================================================
+# XST 综合脚本文件
+# VIDEO_CONVERTER FPGA 工程
+#============================================================================
+
+# 基本设置
+set -tmpdir ./tmp
+set -xsthdpdir ./xst
+set -work work
+
+# 设计文件
+set -design video_converter_top
+
+# 顶层模块
+set -top video_converter_top
+
+# 目标器件
+set -family "Spartan6"
+set -device xc6slx45
+set -package fgg484
+set -speed -3
+
+# 综合选项
+set -polarity positive
+set -effort_level high
+set -fsm_extraction auto
+set -fsm_encoding_style auto
+set -resource_sharing auto
+set -max_fanout 500
+set -equivalent_register_removal YES
+set -register_duplication YES
+set -register_balancing YES
+
+# 优化选项
+set -optimize_primitives auto
+set -power_reduction NO
+set -clock_enable auto
+set -sync_extract YES
+set -safe_implementation NO
+
+# 编码风格
+set -rom_extraction YES
+set -ram_style auto
+set -rom_style auto
+set -mux_style auto
+set -decoder_extraction YES
+set -extract_dsp_primitives YES
+
+# I/O 缓冲
+set -use_ioparams YES
+set -max_pad_io_area_per_bank 0
+
+# 网表文件
+set -write_timing_constraints NO
+set -cross_clock_analysis NO
+
+# 层次结构
+set -hierarchy_top video_converter_top
+set -hierarchy_file video_converter_top.prj
+
+# 输出文件
+set -ifn video_converter.prj
+set -ofn video_converter.ngc
+
+# 运行综合
+xst -ifn video_converter.scr

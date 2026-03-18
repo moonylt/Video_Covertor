@@ -1,0 +1,9 @@
+# VIDEO_CONVERTER 工程源文件列表
+# 格式：<文件类型> <文件路径> <库名>
+
+verilog work "src/top/video_converter_top.v"
+verilog work "src/top/clk_wiz_50to100.v"
+verilog work "src/top/rst_controller_simple.v"
+verilog work "src/top/sys_status_monitor_simple.v"
+verilog work "src/hdmi/tfp401a_rx.v"
+verilog work "src/hdmi/tfp410_tx.v"
