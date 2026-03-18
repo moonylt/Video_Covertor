@@ -1,0 +1,63 @@
+# 许可证文件 - 包含敏感信息
+*.lic
+*.license
+
+# Xilinx ISE 生成文件
+*.ise
+*.lck
+*.log
+*.jou
+*.pbm
+*.lrf
+*.ngc
+*.ngd
+*.ncd
+*.xpi
+*.xrpt
+*.bld
+*.map
+*.par
+*.pad
+*.drc
+*.bit
+*.bin
+*.mcs
+*.prm
+*.ll
+*.dbg
+*.twr
+*.txt~
+
+# Altium Designer 生成文件
+*.OutJob
+*.ECO
+*.History/
+*.tmp
+*~
+$*$
+
+# 编译中间文件
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# 大型二进制文件（可选，根据需要取消注释）
+# *.zip
+# *.pdf
+
+# 压缩包
+*.rar
+*.7z
+*.tar.gz
+
+# 临时文件
+*.bak
+*.swp
+*.swo
+*~

@@ -1,0 +1,114 @@
+#============================================================================
+# UCF Constraints File: adv7125_colorbar.ucf
+# Project: ADV7125 VGA Color Bar Test
+# Device: Xilinx Spartan-6 XC6SLX45-3FGG484I
+# Date: 2026-03-17
+#
+# 功能:
+# - 生成 8 色彩条测试图案
+# - 输出到 ADV7125 VGA DAC
+# - 分辨率：800x600 @ 60Hz (VGA)
+# - 像素时钟：40MHz
+#
+# 硬件连接 (根据网表 Netlist_Schematic1_2026-03-16.tel):
+# - RGB 数据：8 位 (通过电阻排 RN14-RN20)
+# - FPGA 引脚：U8 (XC6SLX45)
+# - ADV7125 引脚：U4 (LFCSP-48)
+#============================================================================
+
+#============================================================================
+# 时钟输入
+#============================================================================
+# 50MHz 系统时钟 (X2)
+NET "clk_50mhz"       LOC = AA12 | IOSTANDARD = LVCMOS33 | PERIOD = 20.000 ns;
+
+#============================================================================
+# 全局复位
+#============================================================================
+NET "rst_n"           LOC = T6   | IOSTANDARD = LVCMOS33 | PULLUP;
+
+#============================================================================
+# ADV7125 (U4) - RGB DAC (VGA 输出)
+# 根据网表，RGB 数据为 8 位，通过电阻排连接
+# RN14: R[7:0] -> U4[48:41]
+# RN19/RN20: G[7:0] -> U4[10:3]
+# RN16/RN17: B[7:0] -> U4[23:16]
+#============================================================================
+
+# 红色数据 (8 位) - R[7:0]
+# RN14: FPGA R7->U4.42, FPGA T10->U4.41 等
+NET "adv7125_red[0]"   LOC = T10  | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # RN14.2 -> U4.41 (B0)
+NET "adv7125_red[1]"   LOC = R7   | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # RN14.1 -> U4.42 (B1)
+NET "adv7125_red[2]"   LOC = W9   | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # RN15.4 -> U4.43 (B2)
+NET "adv7125_red[3]"   LOC = W8   | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # RN15.3 -> U4.44 (B3)
+NET "adv7125_red[4]"   LOC = Y8   | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # RN15.2 -> U4.45 (B4)
+NET "adv7125_red[5]"   LOC = AA8  | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # RN15.1 -> U4.46 (B5)
+NET "adv7125_red[6]"   LOC = AB8  | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # RN20.4 -> U4.47 (B6)
+NET "adv7125_red[7]"   LOC = T7   | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # RN20.3 -> U4.48 (B7)
+
+# 绿色数据 (8 位) - G[7:0]
+# RN19/RN20: G0-G7
+NET "adv7125_green[0]" LOC = V7   | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # RN20.2 -> U4.3 (G0)
+NET "adv7125_green[1]" LOC = AB7  | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # RN20.1 -> U4.4 (G1)
+NET "adv7125_green[2]" LOC = Y6   | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # RN19.4 -> U4.5 (G2)
+NET "adv7125_green[3]" LOC = AA6  | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # RN19.3 -> U4.6 (G3)
+NET "adv7125_green[4]" LOC = AB6  | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # RN19.2 -> U4.7 (G4)
+NET "adv7125_green[5]" LOC = W6   | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # RN19.1 -> U4.8 (G5)
+NET "adv7125_green[6]" LOC = U6   | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # RN18.4 -> U4.9 (G6)
+NET "adv7125_green[7]" LOC = AB5  | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # RN18.3 -> U4.10 (G7)
+
+# 蓝色数据 (8 位) - B[7:0]
+# RN16/RN17: B0-B7
+NET "adv7125_blue[0]"  LOC = AB4  | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # RN17.4 -> U4.16 (B0)
+NET "adv7125_blue[1]"  LOC = AA4  | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # RN17.3 -> U4.17 (B1)
+NET "adv7125_blue[2]"  LOC = Y4   | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # RN17.2 -> U4.18 (B2)
+NET "adv7125_blue[3]"  LOC = AB3  | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # RN17.1 -> U4.19 (B3)
+NET "adv7125_blue[4]"  LOC = W4   | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # RN16.4 -> U4.20 (B4)
+NET "adv7125_blue[5]"  LOC = Y3   | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # RN16.3 -> U4.21 (B5)
+NET "adv7125_blue[6]"  LOC = AB2  | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # RN16.2 -> U4.22 (B6)
+NET "adv7125_blue[7]"  LOC = AA2  | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # RN16.1 -> U4.23 (B7)
+
+# DAC 时钟和控制信号
+NET "adv7125_clk"      LOC = AB11 | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # U4.24
+NET "adv7125_blank_n"  LOC = Y5   | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # U4.11 (通过 RN18.7)
+
+# VGA 同步信号 (连接到 VGA 连接器)
+NET "vga_hs"           LOC = T8   | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # U4.12 (通过 Q3.2/RN24.7)
+NET "vga_vs"           LOC = R8   | IOSTANDARD = LVCMOS33 | SLEW = FAST;  # U4.13 (通过 Q4.2/RN24.8)
+
+#============================================================================
+# DDR3L 内存接口 - 固定电平输出 (不使用)
+#============================================================================
+NET "ddr3_dq[*]"      IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_dqs_p[*]"   IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_dqs_n[*]"   IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_dm[*]"      IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_addr[*]"    IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_ba[*]"      IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_ras_n"      IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_cas_n"      IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_we_n"       IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_reset_n"    IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_ck_p"       IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_ck_n"       IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_cke"        IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_cs_n[*]"    IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+NET "ddr3_odt[*]"     IOSTANDARD = LVCMOS33 | DRIVE = 4 | SLEW = SLOW;
+
+#============================================================================
+# 时序约束
+#============================================================================
+TIMESPEC "TS_SYS_CLK" = PERIOD "sys_clk" 25.000 ns HIGH 50%;
+TIMESPEC "TS_PIXEL_CLK" = PERIOD "pixel_clk" 25.000 ns HIGH 50%;
+
+#============================================================================
+# 时钟专用路由约束
+#============================================================================
+NET "sys_clk" CLOCK_DEDICATED_ROUTE = FALSE;
+NET "pixel_clk" CLOCK_DEDICATED_ROUTE = FALSE;
+
+#============================================================================
+# 配置选项
+#============================================================================
+CONFIG VCCAUX = 3.3;
+CONFIG CONFIG_RATE = 50;
