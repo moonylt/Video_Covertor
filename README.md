@@ -8,69 +8,87 @@ Based on Spartan-6 with HDMI in/out, VGA output, S-Video output etc. Supports sc
 
 ```
 Video_Covertor/
-├── Firmware/              # 固件代码 / Firmware
-│   └── FPGA_Verification/
-│       ├── src/          # Verilog 源代码 / Source
-│       ├── sim/          # 仿真文件 / Simulation
-│       ├── constraints/  # 引脚约束文件 / Constraints
-│       ├── projects/     # 子项目 / Sub-projects
-│       └── docs/         # 技术文档 / Documentation
-├── Sch/                  # Altium 原理图和 PCB 设计 / Schematics & PCB
+├── Firmware/                      # 固件代码 / Firmware
+│   ├── hdmi_vga_combined/         # ✅ HDMI + VGA 双输出工程 (推荐)
+│   │   ├── src/                   # Verilog 源代码
+│   │   ├── constraints/           # 引脚约束文件
+│   │   └── README.md              # 使用说明
+│   ├── FPGA_Verification/         # 主项目 (开发中)
+│   │   ├── src/                   # Verilog 源代码
+│   │   ├── sim/                   # 仿真文件
+│   │   ├── constraints/           # 引脚约束文件
+│   │   └── docs/                  # 技术文档
+│   └── vga_projects/              # VGA 独立测试工程
+│       └── adv7125_colorbar/      # ADV7125 彩条测试
+├── Sch/                           # Altium 原理图和 PCB 设计
 │   ├── Altium_VIDEO_CONVERTER_2026-03-16/
-│   ├── BOM_*.xlsx        # 物料清单 / Bill of Materials
-│   └── Netlist_*.tel     # 网表 / Netlist
-└── README.md             # 项目说明 / Project Description
+│   ├── BOM_*.xlsx                 # 物料清单
+│   └── Netlist_*.tel              # 网表
+└── README.md
 ```
 
 ## 🔧 硬件要求 / Hardware Requirements
 
-- FPGA: Xilinx Spartan-6
-- HDMI 输入接口 / HDMI Input
-- HDMI/AV 输出接口 / HDMI/AV Output
-- DDR3 内存模块 / DDR3 Memory Module
+| 组件 | 型号 |
+|------|------|
+| FPGA | Xilinx Spartan-6 XC6SLX45-3FGG484I |
+| HDMI 接收器 | TFP401A |
+| HDMI 发送器 | TFP410 |
+| VGA DAC | ADV7125 (8-bit RGB) |
+| 视频编码器 | ADV7393 (CVBS/S-Video) |
+| DDR3L | 256MB |
+| 系统时钟 | 50MHz |
 
 ## 📋 主要功能 / Features
 
 - HDMI 视频信号采集 / HDMI Video Capture
-- 帧缓存处理（DDR3）/ Frame Buffer (DDR3)
+- HDMI 视频信号输出 / HDMI Video Output
+- VGA 模拟视频输出 / VGA Analog Output
+- CVBS/S-Video 输出 / Composite Video Output
+- 帧缓存处理 (DDR3) / Frame Buffer (DDR3)
 - 视频格式转换 / Video Format Conversion
-- 多路输出支持 / Multi-output Support
 - 缩放功能 / Scaler
 - 画中画（未来支持）/ PIP (Future)
 
 ## 🚀 快速开始 / Quick Start
 
-### 1. 打开 ISE 项目 / Open ISE Project
+### 推荐：HDMI + VGA 双输出测试
 
 ```bash
-cd Firmware/FPGA_Verification
-# 使用 Xilinx ISE 打开 video_converter.xise / Open with Xilinx ISE
+cd Firmware/hdmi_vga_combined
 ```
 
-### 2. 导入约束 / Import Constraints
+**功能：**
+| 输出接口 | 分辨率 | 刷新率 | 芯片 |
+|----------|--------|--------|------|
+| HDMI | 1280x720 | 60Hz | TFP410 |
+| VGA | 800x600 | 60Hz | ADV7125 |
 
-```bash
-# 使用 constraints/video_converter.ucf
-```
+**测试模式：** 按 BTN0 切换测试图案（白/红/绿/蓝/彩条/网格）
 
-### 3. 生成比特流 / Generate Bitstream
+**使用步骤：**
+1. 用 Xilinx ISE Clocking Wizard 生成 PLL (74.25MHz + 40MHz)
+2. 替换 `src/clk_wiz_dual.v`
+3. 编译下载到 FPGA
+4. 连接 HDMI 和 VGA 显示器测试
 
-在 ISE 中执行 / In ISE:
-- Synthesize
-- Implement
-- Generate Programming File
+详见：[hdmi_vga_combined/README.md](Firmware/hdmi_vga_combined/README.md)
 
-### 4. 烧录到 FPGA / Program FPGA
+### 其他工程
 
-使用 iMPACT 或 Adept 工具烧录 `.bit` 文件 / Use iMPACT or Adept to program `.bit` file
+| 工程 | 路径 | 说明 | 状态 |
+|------|------|------|------|
+| HDMI + VGA 双输出 | `Firmware/hdmi_vga_combined/` | 同时输出测试图案 | ✅ 可用 |
+| VGA 彩条测试 | `Firmware/vga_projects/adv7125_colorbar/` | ADV7125 独立测试 | ✅ 可用 |
+| 主项目 | `Firmware/FPGA_Verification/` | 完整视频转换功能 | 🚧 开发中 |
 
 ## 📄 文档 / Documentation
 
-| 文档 / Document | 说明 / Description |
+| 文档 | 说明 |
 |------|------|
-| [QUICK_START.md](Firmware/FPGA_Verification/QUICK_START.md) | 快速入门指南 / Quick Start Guide |
-| [PROJECT_COMPLETE.md](Firmware/FPGA_Verification/PROJECT_COMPLETE.md) | 项目完成报告 / Project Report |
-| [docs/](Firmware/FPGA_Verification/docs/) | 详细技术文档 / Technical Docs |
+| [HDMI+VGA 工程](Firmware/hdmi_vga_combined/README.md) | 双输出测试工程说明 |
+| [VGA 工程](Firmware/vga_projects/adv7125_colorbar/) | VGA 彩条测试 |
+| [技术文档](Firmware/FPGA_Verification/docs/) | 详细技术文档 |
 
 ## 🛠️ 工具版本 / Tool Versions
 
