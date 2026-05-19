@@ -2,11 +2,7 @@
 
 [![中文](https://img.shields.io/badge/中文-简体-blue)](README_CN.md) [![English](https://img.shields.io/badge/English-EN-green)](README_EN.md)
 
-FPGA-based video signal conversion project supporting HDMI input/output conversion.
-
 Based on Spartan-6 with HDMI in/out, VGA output, S-Video output. Supports scaler, frame buffer, and PIP.
-
----
 
 ## 📁 Project Structure
 
