@@ -6,6 +6,32 @@ FPGA-based video signal conversion project supporting HDMI input/output conversi
 
 Based on Spartan-6 with HDMI in/out, VGA output, S-Video output. Supports scaler, frame buffer, and PIP.
 
+## 📊 System Block Diagram
+
+```
+                    ┌─────────────────────────────────────────────────────┐
+                    │                    Video Converter                   │
+                    └─────────────────────────────────────────────────────┘
+                                            ▲
+                                            │ HDMI In
+                    ┌─────────────────────────────────────────────────────┐
+   HDMI Source ────│  TFP401A   ┌───────────────────────┐    TFP410    │───► HDMI Display
+                    │  Receiver  │                       │  Transmitter │
+                    └────────────│      Spartan-6 FPGA   │──────────────┘
+                                 │      (XC6SLX45)       │
+                    ┌────────────│                       │──────────────┐
+                    │  DDR3L     │    ┌───────────┐      │   ADV7125    │───► VGA Monitor
+                    │  256MB     │    │  Scaler   │      │   VGA DAC    │
+                    │  Frame     │    │  Buffer   │      │──────────────┘
+                    │  Buffer    │    │  PIP      │      │   ADV7393    │───► CVBS/S-Video
+                    └────────────│    └───────────┘      │   Encoder    │
+                                 │                       │──────────────┘
+                    ┌────────────│      50MHz CLK        │──────────────┐
+                    │   Buttons  │                       │    LEDs      │
+                    │   (BTN0)   │                       │   (Status)   │
+                    └────────────┴───────────────────────┴──────────────┘
+```
+
 ---
 
 ## 📁 Project Structure
